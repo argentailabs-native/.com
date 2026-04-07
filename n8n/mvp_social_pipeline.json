@@ -1,0 +1,104 @@
+{
+  "name": "MVP - Argent Social Pipeline",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "argent-social-intake",
+        "responseMode": "lastNode"
+      },
+      "id": "1",
+      "name": "Webhook Intake",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "keepOnlySet": false,
+        "values": {
+          "string": [
+            {"name": "brand_name", "value": "Argent AI Labs"},
+            {"name": "approval_mode", "value": "={{$json.input_payload.approval_mode || 'manual'}}"}
+          ]
+        }
+      },
+      "id": "2",
+      "name": "Set Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3,
+      "position": [420, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "const input = $json.input_payload || {};\nreturn [{json: {\n  run_id: `${Date.now()}-${Math.random().toString(36).slice(2,8)}`,\n  created_at: new Date().toISOString(),\n  brand_name: $json.brand_name,\n  approval_mode: $json.approval_mode,\n  input_payload: input\n}}];"
+      },
+      "id": "3",
+      "name": "Normalize Input",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [640, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{$env.OPENAI_API_KEY}}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"gpt-4.1-mini\",\n  \"response_format\": {\"type\": \"json_object\"},\n  \"messages\": [\n    {\"role\":\"system\",\"content\":\"Classify social content input. Return strict JSON only.\"},\n    {\"role\":\"user\",\"content\": JSON.stringify($json.input_payload)}\n  ]\n}"
+      },
+      "id": "4",
+      "name": "OpenAI Classify",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [860, 300]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": "={{$env.CONTENT_QUEUE_SHEET_ID}}",
+        "sheetName": "content_queue",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{$json.run_id}}",
+            "created_at": "={{$json.created_at}}",
+            "input_source": "={{JSON.stringify($json.input_payload)}}",
+            "status": "draft"
+          }
+        }
+      },
+      "id": "5",
+      "name": "Sheet Insert Queue",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [1080, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Intake": {
+      "main": [[{"node": "Set Config", "type": "main", "index": 0}]]
+    },
+    "Set Config": {
+      "main": [[{"node": "Normalize Input", "type": "main", "index": 0}]]
+    },
+    "Normalize Input": {
+      "main": [[{"node": "OpenAI Classify", "type": "main", "index": 0}]]
+    },
+    "OpenAI Classify": {
+      "main": [[{"node": "Sheet Insert Queue", "type": "main", "index": 0}]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "mvp-v1"
+}

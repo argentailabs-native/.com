@@ -1,0 +1,72 @@
+{
+  "name": "Advanced - Argent Agentic Master",
+  "nodes": [
+    {
+      "parameters": {"rule": {"interval": [{"triggerAtHour": 8, "triggerAtMinute": 0}]}, "timezone": "={{$env.DEFAULT_TIMEZONE || 'UTC'}}"},
+      "id": "1",
+      "name": "Daily Scheduler",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [200, 260]
+    },
+    {
+      "parameters": {"workflowId": "adv_intake_enrichment", "options": {}},
+      "id": "2",
+      "name": "Run Intake & Enrichment",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [430, 260]
+    },
+    {
+      "parameters": {"workflowId": "adv_strategy_planner", "options": {}},
+      "id": "3",
+      "name": "Run Strategy Planner",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [660, 260]
+    },
+    {
+      "parameters": {"workflowId": "adv_content_generator", "options": {}},
+      "id": "4",
+      "name": "Run Content Generator",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [890, 260]
+    },
+    {
+      "parameters": {"workflowId": "adv_approval_orchestrator", "options": {}},
+      "id": "5",
+      "name": "Run Approval",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [1120, 260]
+    },
+    {
+      "parameters": {"workflowId": "adv_publisher", "options": {}},
+      "id": "6",
+      "name": "Run Publisher",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [1350, 260]
+    },
+    {
+      "parameters": {"workflowId": "adv_retry_recovery", "options": {}},
+      "id": "7",
+      "name": "Run Retry Recovery",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [1580, 260]
+    }
+  ],
+  "connections": {
+    "Daily Scheduler": {"main": [[{"node": "Run Intake & Enrichment", "type": "main", "index": 0}]]},
+    "Run Intake & Enrichment": {"main": [[{"node": "Run Strategy Planner", "type": "main", "index": 0}]]},
+    "Run Strategy Planner": {"main": [[{"node": "Run Content Generator", "type": "main", "index": 0}]]},
+    "Run Content Generator": {"main": [[{"node": "Run Approval", "type": "main", "index": 0}]]},
+    "Run Approval": {"main": [[{"node": "Run Publisher", "type": "main", "index": 0}]]},
+    "Run Publisher": {"main": [[{"node": "Run Retry Recovery", "type": "main", "index": 0}]]}
+  },
+  "active": false,
+  "settings": {"executionOrder": "v1"},
+  "versionId": "adv-master-v1"
+}

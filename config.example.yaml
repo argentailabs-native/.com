@@ -1,0 +1,58 @@
+account:
+  ad_account_id: "${META_AD_ACCOUNT_ID}"
+  level: "adset"  # adset | ad
+  objective_type: "lead_gen"  # lead_gen | ecommerce
+
+windows_days: [3, 7, 14]
+
+execution:
+  mode: "recommendation" # recommendation | live
+  require_live_confirmation: true
+  live_confirmation_value: "I_UNDERSTAND_LIVE_CHANGES"
+  cooldown_hours: 24
+
+thresholds:
+  min_spend: 30.0
+  min_impressions: 1500
+  min_clicks: 30
+  min_conversions: 2
+  target_cpa: 25.0
+  max_acceptable_cpa_multiplier: 1.4
+  min_roas: 1.6
+  min_ctr: 0.8
+  max_cpc: 3.5
+  high_frequency_threshold: 3.5
+
+budget_rules:
+  increase_pct: 0.10
+  decrease_pct: 0.15
+  severe_decrease_pct: 0.25
+  max_change_pct_per_day: 0.20
+  min_daily_budget: 10.0
+  max_daily_budget: 1000.0
+  pause_only_if_far_below_threshold: true
+  pause_cpa_multiplier: 2.2
+  pause_min_spend: 100.0
+
+statistical_safety:
+  min_days_data: 3
+  confidence_guard_enabled: true
+  weak_sample_guard:
+    min_unique_days: 2
+    min_conversions_for_cpa_decision: 3
+
+reporting:
+  export_csv_path: "exports/actions.csv"
+  history_db_path: "data/history.db"
+  summary_output_path: "reports/latest_summary.json"
+  notify_slack: false
+
+campaign_rules:
+  lead_gen:
+    weight_cpa: 0.5
+    weight_ctr: 0.25
+    weight_cpc: 0.25
+  ecommerce:
+    weight_roas: 0.6
+    weight_ctr: 0.2
+    weight_cpa: 0.2

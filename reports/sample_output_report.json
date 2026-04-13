@@ -1,0 +1,30 @@
+{
+  "run_ts": "2026-04-12T00:00:00+00:00",
+  "mode": "recommendation",
+  "totals": {
+    "increase_budget": 2,
+    "decrease_budget": 3,
+    "no_change": 9,
+    "pause": 1
+  },
+  "actions": [
+    {
+      "entity_id": "120001",
+      "entity_name": "US Prospecting - Broad",
+      "action": "increase_budget",
+      "old_budget": 120.0,
+      "new_budget": 132.0,
+      "reason": "strong CPA/ROAS with healthy conversion volume",
+      "executed": false
+    },
+    {
+      "entity_id": "120089",
+      "entity_name": "Retargeting - 30d",
+      "action": "decrease_budget",
+      "old_budget": 80.0,
+      "new_budget": 68.0,
+      "reason": "ROAS too low (1.10); frequency too high (4.20)",
+      "executed": false
+    }
+  ]
+}

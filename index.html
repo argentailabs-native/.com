@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Find compatible classmates and build a better study routine." />
+    <title>Study Circle — Find your people. Ace your class.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Study Circle home">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>study<span>circle</span></span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#how-it-works">How it works</a>
+        <a href="#matcher">Find groups</a>
+        <a class="nav-button" href="#matcher">Get started <span>→</span></a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span></span> Better together</div>
+          <h1>Find your people.<br /><em>Ace your class.</em></h1>
+          <p>Connect with classmates who share your course, schedule, and study style. The right study group is just a few clicks away.</p>
+          <a class="primary-button" href="#matcher">Find my study group <span>→</span></a>
+          <div class="social-proof">
+            <div class="avatars" aria-label="Student community">
+              <span class="avatar peach">AM</span><span class="avatar teal">JR</span><span class="avatar yellow">SK</span><span class="avatar navy">+</span>
+            </div>
+            <p><strong>2,400+ students</strong><br />already studying smarter</p>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="scribble">✦</div>
+          <div class="mini-card card-one"><span class="avatar peach">AM</span><div><b>Alex &amp; 3 others</b><small>BIO 201 · Tue 4 PM</small></div><span class="check">✓</span></div>
+          <div class="mini-card card-two"><span class="avatar teal">JR</span><div><b>Found a match!</b><small>94% compatible</small></div><span class="spark">✦</span></div>
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="big-circle"><span>STUDY</span><b>TOGETHER</b><i>→</i></div>
+          <span class="dot dot-one"></span><span class="dot dot-two"></span><span class="plus">+</span>
+        </div>
+      </section>
+
+      <section class="process" id="how-it-works">
+        <div class="section-heading">
+          <div><span class="kicker">THE PROCESS</span><h2>Three steps to your<br />perfect study crew.</h2></div>
+          <p>No endless group chats or awkward introductions. Tell us what works for you, and we'll do the matching.</p>
+        </div>
+        <div class="steps">
+          <article><span class="step-number">01</span><div class="step-icon coral">⌕</div><h3>Choose your course</h3><p>Enter your course code to find students in the exact same class.</p></article>
+          <article><span class="step-number">02</span><div class="step-icon mint">◷</div><h3>Share your rhythm</h3><p>Pick the times, format, and study style that feel right for you.</p></article>
+          <article><span class="step-number">03</span><div class="step-icon gold">✦</div><h3>Meet your matches</h3><p>Get a ranked list of compatible groups, ready when you are.</p></article>
+        </div>
+      </section>
+
+      <section class="matcher-section" id="matcher">
+        <div class="matcher-intro"><span class="kicker">FIND YOUR MATCH</span><h2>What does your ideal<br />study session look like?</h2><p>Adjust your preferences and see your best matches update instantly.</p></div>
+        <div class="matcher-layout">
+          <form class="match-form" id="match-form">
+            <label for="course">Course code</label>
+            <div class="select-wrap"><select id="course" name="course"><option>BIO 201</option><option>CHEM 101</option><option>CS 150</option></select></div>
+
+            <fieldset><legend>When are you free?</legend><p class="hint">Choose all that work</p><div class="times" id="times">
+              <label><input type="checkbox" value="Mon morning" />Mon<span>Morning</span></label>
+              <label><input type="checkbox" value="Tue afternoon" checked />Tue<span>Afternoon</span></label>
+              <label><input type="checkbox" value="Wed evening" checked />Wed<span>Evening</span></label>
+              <label><input type="checkbox" value="Thu afternoon" />Thu<span>Afternoon</span></label>
+              <label><input type="checkbox" value="Fri morning" />Fri<span>Morning</span></label>
+            </div></fieldset>
+
+            <fieldset><legend>How do you like to study?</legend><div class="segmented" id="style-options">
+              <label><input type="radio" name="style" value="Quiet review" /><span>☕</span>Quiet review</label>
+              <label><input type="radio" name="style" value="Active discussion" checked /><span>☁</span>Active discussion</label>
+            </div></fieldset>
+            <fieldset><legend>Where should you meet?</legend><div class="segmented" id="format-options">
+              <label><input type="radio" name="format" value="In-person" checked /><span>⌖</span>In-person</label>
+              <label><input type="radio" name="format" value="Virtual" /><span>▣</span>Virtual</label>
+            </div></fieldset>
+            <button class="primary-button form-button" type="submit">Show my matches <span>→</span></button>
+          </form>
+
+          <div class="results-panel" aria-live="polite">
+            <div class="results-top"><div><span class="live-dot"></span><b id="result-count">3 matches found</b></div><span>Sorted by compatibility</span></div>
+            <div id="results"></div>
+            <div class="empty-state" id="empty-state" hidden><span>⌕</span><h3>No exact matches yet</h3><p>Try another time, format, or course to discover more groups.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta">
+        <span class="cta-star">✦</span><h2>Ready to study<br /><em>better together?</em></h2><p>Your next study session could be the one that makes everything click.</p><a class="dark-button" href="#matcher">Find my group <span>→</span></a>
+      </section>
+    </main>
+    <footer><a class="brand" href="#top"><span class="brand-mark">S</span><span>study<span>circle</span></span></a><p>Made for students, by students.</p><p>© 2026 Study Circle</p></footer>
+    <script src="app.js"></script>
+  </body>
+</html>
